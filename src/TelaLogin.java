@@ -14,6 +14,7 @@ import Repository.UsuarioRepository;
 import model.Usuario;
 
 public class TelaLogin extends JFrame {
+
     TelaCadastroProduto telaCadastro = new TelaCadastroProduto();
     UsuarioRepository repositoryUsuario = new UsuarioRepository();
     JFrame jFrame = new JFrame("Login");
@@ -86,7 +87,6 @@ public class TelaLogin extends JFrame {
                 char[] passwordChars = password.getPassword();
                 String passwordString = new String(passwordChars);
                 int passwordInt = Integer.parseInt(passwordString);
-
                 if (usuario.getLogin().equalsIgnoreCase(tusuario.getText()) && usuario.getSenha() == passwordInt) {
                     jFrame.dispose();
                     telaCadastro.telaCadastro();

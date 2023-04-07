@@ -21,6 +21,7 @@ import model.Produto;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -30,6 +31,7 @@ public class TelaPrincipal {
 
     JFrame frame = new JFrame();
     JPanel painel = new JPanel();
+
     JTable tabelaProdutos = new JTable();
     JButton adicionar = new JButton();
     JButton finalizar = new JButton();
@@ -162,20 +164,30 @@ public class TelaPrincipal {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                repositoryPedido.excluirTodosPedidos();
+                try {
+                    if (repositoryPedido.consultaPedidos().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "POR FAVOR INSIRA UM PEDIDO");
+                    } else {
 
-                new consultaAction().actionPerformed(e);
-                total.setText(null);
-                endereco.setText(null);
-                nome.setText(null);
-                grupoPagamento.clearSelection();
-                comboProdutos.setSelectedItem(null);
-                grupoEntrega.clearSelection();
-                quantidade.setText(null);
-                Icon logo = new ImageIcon("src/img/logo.png");
-                JOptionPane.showMessageDialog(null,
-                        "\n\nPEDIDO REALIZADO COM SUCESSO!\nNATURELLA AGRADECE SUA PREFERÊNCIA!\n\n\n", null,
-                        JOptionPane.INFORMATION_MESSAGE, logo);
+                        repositoryPedido.excluirTodosPedidos();
+
+                        new consultaAction().actionPerformed(e);
+                        total.setText(null);
+                        endereco.setText(null);
+                        nome.setText(null);
+                        grupoPagamento.clearSelection();
+                        comboProdutos.setSelectedItem(null);
+                        grupoEntrega.clearSelection();
+                        quantidade.setText(null);
+                        Icon logo = new ImageIcon("src/img/logo.png");
+                        JOptionPane.showMessageDialog(null,
+                                "\n\nPEDIDO REALIZADO COM SUCESSO!\nNATURELLA AGRADECE SUA PREFERÊNCIA!\n\n", null,
+                                JOptionPane.INFORMATION_MESSAGE, logo);
+                    }
+                } catch (SQLException e1) {
+
+                    e1.printStackTrace();
+                }
             }
 
         });
@@ -236,7 +248,7 @@ public class TelaPrincipal {
                 }
                 pedido.setQuantidade(Integer.parseInt(quantidade.getText()));
 
-                if (delivery.isSelected()) {
+                if (credito.isSelected()) {
                     pedido.setPagamento(credito.getText());
 
                 } else {
@@ -282,7 +294,6 @@ public class TelaPrincipal {
 
             }
 
-     
             model.addColumn("Código");
             model.addColumn("Nome");
             model.addColumn("Endereço");
@@ -306,23 +317,21 @@ public class TelaPrincipal {
 
                 }
 
-          
-
                 TableColumnModel columnModel = tabelaProdutos.getColumnModel();
-                columnModel.getColumn(0).setPreferredWidth(60); 
+                columnModel.getColumn(0).setPreferredWidth(60);
                 columnModel.getColumn(1).setPreferredWidth(100);
                 columnModel.getColumn(2).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-                columnModel.getColumn(4).setPreferredWidth(100); 
+                columnModel.getColumn(4).setPreferredWidth(100);
                 columnModel.getColumn(5).setPreferredWidth(100);
-                columnModel.getColumn(6).setPreferredWidth(100); 
+                columnModel.getColumn(6).setPreferredWidth(100);
                 columnModel.getColumn(7).setPreferredWidth(100);
-    
 
                 total.setText("R$" + Double.toString(totalProduto));
 
             }
-
         }
+
     }
+
 }
