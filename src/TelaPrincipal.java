@@ -1,9 +1,11 @@
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
@@ -16,6 +18,8 @@ import Repository.ProdutoRepository;
 import model.Pedido;
 import model.Produto;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
@@ -161,6 +165,16 @@ public class TelaPrincipal implements ActionListener {
 
                 new consultaAction().actionPerformed(e);
                 total.setText(null);
+                endereco.setText(null);
+                nome.setText(null);
+                grupoPagamento.clearSelection();
+                comboProdutos.setSelectedItem(null);
+                grupoEntrega.clearSelection();
+                quantidade.setText(null);
+                Icon logo = new ImageIcon("src/img/logo.png");
+                JOptionPane.showMessageDialog(null,
+                        "\n\nPEDIDO REALIZADO COM SUCESSO!\nNATURELLA AGRADECE SUA PREFERÊNCIA!\n\n\n", null,
+                        JOptionPane.INFORMATION_MESSAGE, logo);
             }
 
         });
@@ -171,10 +185,28 @@ public class TelaPrincipal implements ActionListener {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                ArrayList<Pedido> pedidosDB2 = new ArrayList<>();
                 int linhaSelecionada = tabelaProdutos.getSelectedRow();
                 repositoryPedido.excluir((int) tabelaProdutos.getValueAt(linhaSelecionada, 0));
-
+                try {
+                    pedidosDB2 = repositoryPedido.consultaPedidos();
+                } catch (SQLException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
                 new consultaAction().actionPerformed(e);
+                if(pedidosDB2.size()>0){
+                double totalProduto = 0;
+                for (Pedido pedido2 : pedidosDB2) {
+
+                    
+                    totalProduto += pedido2.getPreco() * pedido2.getQuantidade();
+                  total.setText("R$" + Double.toString(totalProduto));
+                }
+                }else{
+                    total.setText(null);
+                }
+         
 
             }
 
@@ -215,11 +247,9 @@ public class TelaPrincipal implements ActionListener {
                 }
 
                 repositoryPedido.inserir(pedido);
-                endereco.setText(null);
-                nome.setText(null);
-                grupoPagamento.clearSelection();
+
                 comboProdutos.setSelectedItem(null);
-                grupoEntrega.clearSelection();
+
                 quantidade.setText(null);
                 new consultaAction().actionPerformed(e);
 
@@ -229,7 +259,10 @@ public class TelaPrincipal implements ActionListener {
 
         ltotal.setText("VALOR TOTAL:");
         ltotal.setBounds(1090, 600, 100, 30);
-        total.setBounds(1190, 600, 110, 30);
+        total.setBounds(1190, 600, 110, 25);
+        Font font = total.getFont().deriveFont(20f);
+        total.setForeground(Color.RED);
+        total.setFont(font);
 
     }
 
@@ -271,6 +304,7 @@ public class TelaPrincipal implements ActionListener {
                     totalProduto += pedido2.getPreco() * pedido2.getQuantidade();
 
                 }
+
                 total.setText("R$" + Double.toString(totalProduto));
 
             }
