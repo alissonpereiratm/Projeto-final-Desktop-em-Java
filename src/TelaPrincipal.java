@@ -12,6 +12,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 import Repository.PedidoRepository;
 import Repository.ProdutoRepository;
@@ -25,7 +26,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TelaPrincipal  {
+public class TelaPrincipal {
 
     JFrame frame = new JFrame();
     JPanel painel = new JPanel();
@@ -151,8 +152,8 @@ public class TelaPrincipal  {
         }
 
         lquantidade.setText("QUANTIDADE:");
-        lquantidade.setBounds(430, 465, 100, 20);
-        quantidade.setBounds(515, 465, 50, 20);
+        lquantidade.setBounds(430, 475, 100, 20);
+        quantidade.setBounds(515, 475, 50, 20);
 
         finalizar.setText("ENVIAR PEDIDO");
         finalizar.setBounds(900, 600, 130, 30);
@@ -195,18 +196,16 @@ public class TelaPrincipal  {
                     e1.printStackTrace();
                 }
                 new consultaAction().actionPerformed(e);
-                if(pedidosDB2.size()>0){
-                double totalProduto = 0;
-                for (Pedido pedido2 : pedidosDB2) {
+                if (pedidosDB2.size() > 0) {
+                    double totalProduto = 0;
+                    for (Pedido pedido2 : pedidosDB2) {
 
-                    
-                    totalProduto += pedido2.getPreco() * pedido2.getQuantidade();
-                  total.setText("R$" + Double.toString(totalProduto));
-                }
-                }else{
+                        totalProduto += pedido2.getPreco() * pedido2.getQuantidade();
+                        total.setText("R$" + Double.toString(totalProduto));
+                    }
+                } else {
                     total.setText(null);
                 }
-         
 
             }
 
@@ -282,6 +281,8 @@ public class TelaPrincipal  {
             } catch (SQLException e1) {
 
             }
+
+     
             model.addColumn("Código");
             model.addColumn("Nome");
             model.addColumn("Endereço");
@@ -304,6 +305,19 @@ public class TelaPrincipal  {
                     totalProduto += pedido2.getPreco() * pedido2.getQuantidade();
 
                 }
+
+                tabelaProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+                TableColumnModel columnModel = tabelaProdutos.getColumnModel();
+                columnModel.getColumn(0).setPreferredWidth(50); 
+                columnModel.getColumn(1).setPreferredWidth(100);
+                columnModel.getColumn(2).setPreferredWidth(150);
+                columnModel.getColumn(3).setPreferredWidth(150);
+                columnModel.getColumn(4).setPreferredWidth(130); 
+                columnModel.getColumn(5).setPreferredWidth(100);
+                columnModel.getColumn(6).setPreferredWidth(100); 
+                columnModel.getColumn(7).setPreferredWidth(100);
+    
 
                 total.setText("R$" + Double.toString(totalProduto));
 
