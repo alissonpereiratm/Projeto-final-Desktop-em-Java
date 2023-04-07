@@ -25,7 +25,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class TelaPrincipal implements ActionListener {
+public class TelaPrincipal  {
 
     JFrame frame = new JFrame();
     JPanel painel = new JPanel();
@@ -311,11 +311,4 @@ public class TelaPrincipal implements ActionListener {
 
         }
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actionPerformed'");
-    }
-
 }
