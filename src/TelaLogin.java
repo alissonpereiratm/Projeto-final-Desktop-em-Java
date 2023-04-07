@@ -22,6 +22,7 @@ public class TelaLogin extends JFrame {
     JButton bVoltar = new JButton();
     JLabel usuario = new JLabel();
     JLabel senha = new JLabel();
+    JLabel titulo = new JLabel();
     JTextArea tusuario = new JTextArea();
     JPasswordField password = new JPasswordField();
 
@@ -39,10 +40,14 @@ public class TelaLogin extends JFrame {
         jPanel.add(senha);
         jPanel.add(password);
         jPanel.add(tusuario);
+        jPanel.add(titulo);
 
         usuario.setText("Usuário");
         usuario.setBounds(50, 95, 80, 30);
         tusuario.setBounds(100, 100, 100, 20);
+
+        titulo.setText("ACESSO ADMINISTRADOR");
+        titulo.setBounds(170, 30, 150, 30);
 
         senha.setText("Senha");
         senha.setBounds(250, 95, 80, 30);

@@ -114,31 +114,31 @@ public class TelaPrincipal {
         imagem.setIcon(new ImageIcon("src/img/LogoNa.png"));
         imagem.setBounds(125, 1, 435, 400);
         lnome.setText("NOME:");
-        lnome.setBounds(100, 425, 50, 20);
-        nome.setBounds(150, 425, 200, 20);
+        lnome.setBounds(130, 425, 50, 20);
+        nome.setBounds(180, 425, 175, 20);
 
         lendereco.setText("ENDEREÇO:");
         lendereco.setBounds(100, 475, 75, 20);
-        endereco.setBounds(175, 475, 175, 20);
+        endereco.setBounds(180, 475, 175, 20);
 
         tabelaProdutos.setBounds(725, 45, 600, 500);
 
-        entrega.setText("MÉTODO DE ENTREGA:");
-        entrega.setBounds(100, 515, 150, 18);
+        entrega.setText("MÉTODO ENTREGA:");
+        entrega.setBounds(57, 515, 150, 18);
         delivery.setText("DELIVERY");
-        delivery.setBounds(245, 515, 85, 18);
+        delivery.setBounds(175, 515, 85, 18);
         retirada.setText("RETIRADA");
-        retirada.setBounds(245, 535, 85, 18);
+        retirada.setBounds(175, 540, 85, 18);
 
         grupoEntrega.add(delivery);
         grupoEntrega.add(retirada);
 
         pagamento.setText("MÉTODO PAGAMENTO:");
-        pagamento.setBounds(500, 515, 150, 18);
+        pagamento.setBounds(370, 515, 150, 18);
         credito.setText("CRÉDITO");
-        credito.setBounds(500, 540, 85, 18);
+        credito.setBounds(510, 515, 85, 18);
         debito.setText("DÉBITO");
-        debito.setBounds(500, 565, 85, 18);
+        debito.setBounds(510, 540, 85, 18);
 
         grupoPagamento.add(debito);
         grupoPagamento.add(credito);
@@ -152,7 +152,7 @@ public class TelaPrincipal {
         }
 
         lquantidade.setText("QUANTIDADE:");
-        lquantidade.setBounds(430, 475, 100, 20);
+        lquantidade.setBounds(420, 475, 100, 20);
         quantidade.setBounds(515, 475, 50, 20);
 
         finalizar.setText("ENVIAR PEDIDO");
@@ -289,10 +289,10 @@ public class TelaPrincipal {
             model.addColumn("Entrega");
             model.addColumn("Pagamento");
             model.addColumn("Quantidade");
-            model.addColumn("Preço Unitario");
-            model.addColumn("Nome Produto");
+            model.addColumn("R$ Unitario");
+            model.addColumn("Descrição");
 
-            model.addRow(new Object[] { "Código", "Nome", "Endereço", "Nome do Produto", "Preço Unitário",
+            model.addRow(new Object[] { "Código", "Nome", "Endereço", "Descrição", "R$ Unitário",
                     "Quantidade", "Pagamento", "Entrega" });
             for (Pedido pedido : pedidosDB) {
                 model.addRow(new Object[] { pedido.getCodigo(), pedido.getNome(), pedido.getEndereco(),
@@ -306,14 +306,14 @@ public class TelaPrincipal {
 
                 }
 
-                tabelaProdutos.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+          
 
                 TableColumnModel columnModel = tabelaProdutos.getColumnModel();
-                columnModel.getColumn(0).setPreferredWidth(50); 
+                columnModel.getColumn(0).setPreferredWidth(60); 
                 columnModel.getColumn(1).setPreferredWidth(100);
                 columnModel.getColumn(2).setPreferredWidth(150);
                 columnModel.getColumn(3).setPreferredWidth(150);
-                columnModel.getColumn(4).setPreferredWidth(130); 
+                columnModel.getColumn(4).setPreferredWidth(100); 
                 columnModel.getColumn(5).setPreferredWidth(100);
                 columnModel.getColumn(6).setPreferredWidth(100); 
                 columnModel.getColumn(7).setPreferredWidth(100);
