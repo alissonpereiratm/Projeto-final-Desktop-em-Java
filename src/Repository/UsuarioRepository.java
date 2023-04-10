@@ -28,7 +28,7 @@ public class UsuarioRepository {
             }
 
         } catch (Exception e) {
-            System.out.println("Não conseguiu consultar a tabela Pedido");
+            System.out.println("Não conseguiu consultar a tabela Usuario");
         } finally {
             conexao.desconectar(conn);
         }

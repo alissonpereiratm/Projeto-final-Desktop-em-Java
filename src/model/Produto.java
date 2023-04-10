@@ -7,6 +7,9 @@ public class Produto {
 
     @Override
     public String toString() {
+        if (nome == null) {
+            return "";
+        }
         return nome + "   R$" + valor;
     }
 

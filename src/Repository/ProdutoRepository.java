@@ -6,10 +6,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Produto;
 
-public class ProdutoRepository {
+public class ProdutoRepository /* extends BaseRepository<Produto> */ {
+
+    /*
+     * @Override
+     * protected String getTableName() {
+     * return "PRODUTO";
+     * }
+     */
 
     public void inserir(Produto produto) {
         Conexao conexao = new Conexao();
@@ -60,30 +68,33 @@ public class ProdutoRepository {
     public ArrayList<Produto> consultaProdutos() throws SQLException {
         ArrayList<Produto> produtos = new ArrayList<>();
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-      
-        String sql = "Select * From produto";
-        Statement stm = conn.createStatement();
-        ResultSet resultado = stm.executeQuery(sql);
 
-        try {
+        String sql = "Select * From produto";
+        // Qualquer classe que implemente autoCloseable, implicitamente realiza um
+        // close() ao finalizar a instrução, colocar dentro do bloco try
+        try (Connection conn = conexao.conectar();
+                Statement stm = conn.createStatement();
+                ResultSet resultado = stm.executeQuery(sql)) {
 
             while (resultado.next()) {
-                Produto produto = new Produto();
-                produto.setCodigo(Integer.parseInt(resultado.getString("id")));
-                produto.setNome(resultado.getString("nome"));
-                produto.setValor(Double.parseDouble(String.valueOf(resultado.getDouble("valor"))));
-                produtos.add(produto);
+                populaRegistro(resultado, produtos);
             }
 
         } catch (Exception e) {
             System.out.println("Não conseguiu consultar a tabela Produto");
-        } finally {
-            conexao.desconectar(conn);
         }
 
         return produtos;
 
+    }
+
+    /* @Override */
+    protected void populaRegistro(ResultSet resultado, List<Produto> lista) throws SQLException {
+        Produto produto = new Produto();
+        produto.setCodigo(resultado.getInt("id"));
+        produto.setNome(resultado.getString("nome"));
+        produto.setValor(resultado.getDouble("valor"));
+        lista.add(produto);
     }
 
     public void editar(Produto produto) {

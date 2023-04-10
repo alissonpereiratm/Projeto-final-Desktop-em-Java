@@ -84,19 +84,27 @@ public class TelaLogin extends JFrame {
                 } catch (SQLException e1) {
                     System.out.println("ERRO CONSULTA USUARIO");
                 }
-                char[] passwordChars = password.getPassword();
-                String passwordString = new String(passwordChars);
-                int passwordInt = Integer.parseInt(passwordString);
-                if (usuario.getLogin().equalsIgnoreCase(tusuario.getText()) && usuario.getSenha() == passwordInt) {
-                    jFrame.dispose();
-                    telaCadastro.telaCadastro();
+                try {
+                    char[] passwordChars = password.getPassword();
+                    String passwordString = new String(passwordChars);
+                    int passwordInt = Integer.parseInt(passwordString);
+                    if (usuario.getLogin().equalsIgnoreCase(tusuario.getText()) && usuario.getSenha() == passwordInt) {
+                        jFrame.dispose();
+                        telaCadastro.telaCadastro();
 
-                } else {
-                    JOptionPane.showMessageDialog(null, "USUÁRIO E/OU SENHA INVÁLIDO!\nTENTE NOVAMENTE!");
-                    password.setText(null);
-                    tusuario.setText(null);
+                    } else {
+                        mostraMsgUsuarioSenhaInvalido();
+                    }
+                } catch (NumberFormatException ne) {
+                    mostraMsgUsuarioSenhaInvalido();
                 }
 
+            }
+
+            private void mostraMsgUsuarioSenhaInvalido() {
+                JOptionPane.showMessageDialog(null, "USUÁRIO E/OU SENHA INVÁLIDO!\nTENTE NOVAMENTE!");
+                password.setText(null);
+                tusuario.setText(null);
             }
 
         });

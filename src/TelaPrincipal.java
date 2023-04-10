@@ -1,3 +1,11 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -18,14 +26,6 @@ import Repository.PedidoRepository;
 import Repository.ProdutoRepository;
 import model.Pedido;
 import model.Produto;
-
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 public class TelaPrincipal {
 
@@ -55,7 +55,7 @@ public class TelaPrincipal {
     JLabel ltotal = new JLabel();
 
     JTextPane informacoes = new JTextPane();
-    JComboBox comboProdutos = new JComboBox<>();
+    JComboBox comboProdutos = new JComboBox<Produto>();
     JLabel lprodutos = new JLabel();
     JLabel imagem = new JLabel();
 
@@ -67,9 +67,12 @@ public class TelaPrincipal {
     public void telaCadastro() throws SQLException {
 
         Pedido pedido = new Pedido();
+        // List<Produto> produtos = new ArrayList<>();
         ArrayList<Produto> produtos = new ArrayList<>();
         ProdutoRepository repositoryProduto = new ProdutoRepository();
+        // produtos = repositoryProduto.findAll();
         produtos = repositoryProduto.consultaProdutos();
+        produtos.add(0, new Produto());
 
         frame.setSize(1920, 1080);
         painel.setSize(1920, 1080);
@@ -148,9 +151,9 @@ public class TelaPrincipal {
         comboProdutos.setBounds(515, 425, 150, 20);
         lprodutos.setText("SELECIONE PRODUTO:");
         lprodutos.setBounds(370, 425, 150, 20);
-        comboProdutos.addItem(null);
-        for (Produto pedido1 : produtos) {
-            comboProdutos.addItem(pedido1);
+        // comboProdutos.addItem(null);
+        for (Produto produto : produtos) {
+            comboProdutos.addItem(produto);
         }
 
         lquantidade.setText("QUANTIDADE:");
