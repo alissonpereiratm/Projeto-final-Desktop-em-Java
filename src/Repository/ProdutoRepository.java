@@ -21,8 +21,10 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
 
     public void inserir(Produto produto) {
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-        try {
+
+           // Qualquer classe que implemente autoCloseable, implicitamente realiza um
+        // close() ao finalizar a instrução, colocar dentro do bloco try
+        try ( Connection conn = conexao.conectar();){
             String sql = "INSERT INTO produto(id,nome,valor)" + "VALUES (NEXTVAL('produto_seq'),?,?)";
             PreparedStatement stm;
             stm = conn.prepareStatement(sql);
@@ -32,22 +34,21 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
 
         } catch (Exception e) {
             System.out.println("ERRO INSERIR");
-        } finally {
-            conexao.desconectar(conn);
-        }
+        } 
 
     }
 
     public Produto buscaID(int id) throws SQLException {
 
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
+       
         Produto produto = new Produto();
         String sql = "Select * From produto where id=" + id;
-        Statement stm = conn.createStatement();
-        ResultSet resultado = stm.executeQuery(sql);
+      
 
-        try {
+        try ( Connection conn = conexao.conectar();  
+            Statement stm = conn.createStatement();
+        ResultSet resultado = stm.executeQuery(sql);){
 
             while (resultado.next()) {
                 produto.setCodigo(Integer.parseInt(resultado.getString("id")));
@@ -57,10 +58,7 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
 
         } catch (Exception e) {
             System.out.println("Não conseguiu consultar a tabela Produto");
-        } finally {
-            conexao.desconectar(conn);
-        }
-
+        } 
         return produto;
 
     }
@@ -70,8 +68,7 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
         Conexao conexao = new Conexao();
 
         String sql = "Select * From produto";
-        // Qualquer classe que implemente autoCloseable, implicitamente realiza um
-        // close() ao finalizar a instrução, colocar dentro do bloco try
+     
         try (Connection conn = conexao.conectar();
                 Statement stm = conn.createStatement();
                 ResultSet resultado = stm.executeQuery(sql)) {
@@ -100,8 +97,8 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
     public void editar(Produto produto) {
 
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-        try {
+     
+        try(   Connection conn = conexao.conectar();) {
             String sql = "UPDATE produto set nome=?,valor=? WHERE id=?";
             PreparedStatement stm;
             stm = conn.prepareStatement(sql);
@@ -112,26 +109,22 @@ public class ProdutoRepository /* extends BaseRepository<Produto> */ {
 
         } catch (Exception e) {
             System.out.println("ERRO EDITAR");
-        } finally {
-            conexao.desconectar(conn);
-        }
+        } 
 
     }
 
     public void excluir(int id) {
 
         Conexao conexao = new Conexao();
-        Connection conn = conexao.conectar();
-        try {
+       
+        try ( Connection conn = conexao.conectar();) {
             String sql = "DELETE FROM produto where id=" + id;
             Statement stm = conn.createStatement();
             stm.executeQuery(sql);
 
         } catch (Exception e) {
             System.out.println("ERRO EXCLUIR");
-        } finally {
-            conexao.desconectar(conn);
-        }
+        } 
 
     }
 
