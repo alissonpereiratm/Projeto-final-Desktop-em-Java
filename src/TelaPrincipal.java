@@ -118,8 +118,8 @@ public class TelaPrincipal {
 
         imagem.setIcon(new ImageIcon("src/img/LogoNa.png"));
         imagem.setBounds(125, 1, 435, 400);
-        lnome.setText("NOME:");
-        lnome.setBounds(130, 425, 50, 20);
+        lnome.setText("NOME CLIENTE:");
+        lnome.setBounds(80, 425, 100, 20);
         nome.setBounds(180, 425, 175, 20);
 
         lendereco.setText("ENDEREÇO:");
@@ -294,7 +294,7 @@ public class TelaPrincipal {
             try {
                 pedidosDB = repositoryPedido.consultaPedidos();
             } catch (SQLException e1) {
-
+                e1.printStackTrace();
             }
 
             model.addColumn("Código");

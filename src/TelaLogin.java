@@ -65,7 +65,7 @@ public class TelaLogin extends JFrame {
                 try {
                     telaPrincipal.telaCadastro();
                 } catch (SQLException e1) {
-                    // TODO Auto-generated catch block
+                 
                     e1.printStackTrace();
                 }
             }
